@@ -3,24 +3,10 @@ FROM golang:1.20.3-alpine
 LABEL maintainer="Justin <justinmoonca@gmail.com>"
 
 # install requirement packages
-USER root
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends \
-    curl \
-    zip \
-    unzip \
-    git \
-    vim
+RUN apk update --no-cache && apk add --no-cache tzdata
 
 # $GOPATH/bin => $PATH
 ENV PATH $GOPATH/bin:$PATH
-
-# clear
-USER root
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    rm /var/log/lastlog /var/log/faillog
 
 WORKDIR /usr/src/code
 
